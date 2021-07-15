@@ -29,7 +29,7 @@ services:
   api:
     container_name: api
     build:
-      context: api
+      context: server
       dockerfile: Dockerfile
 
     depends_on:
