@@ -1,4 +1,5 @@
 cache
 export
-ipfs/*
-!ipfs/config
+ipfs/cluster0/*
+ipfs/ipfs0/*
+!ipfs/cluster0/service.json
