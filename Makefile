@@ -22,8 +22,8 @@ run-prod:
 
 
 run-prod:
-	docker run -d --name opendata-ipfs-node --restart=always -v /var/data/ipfs:/data/ipfs -p 4001:4001 -p 4001:4001/udp --env OPENDATA_NODE=mynode sethealth/opendata-ipfs-node:latest
-	+
+	docker run -d --name opendata-ipfs-node --restart=always -v /var/data/ipfs:/data/ipfs -p 4001:4001 -p 4001:4001/udp --env OPENDATA_NODE=sethealth_do sethealth/opendata-ipfs-node:latest
+
 run-compose: build
 	docker-compose -f docker-compose.yaml up --renew-anon-volumes --remove-orphans
 
