@@ -67,6 +67,7 @@ VOLUME $IPFS_PATH
 
 # The default logging level
 ENV IPFS_LOGGING ""
+ENV OPENDATA_NODE "anonymous"
 
 # This just makes sure that:
 # 1. There's an fs-repo, and initializes one if there isn't.

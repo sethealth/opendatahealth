@@ -2,6 +2,9 @@ version: "3.8"
 services:
   opendata_ipfs_node:
     image: sethealth/opendata-ipfs-node
+    environment:
+      OPENDATA_NODE: mynode
+
     ports:
       - "4001:4001" # ipfs swarm
       - "4001:4001/udp"

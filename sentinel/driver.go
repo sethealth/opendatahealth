@@ -15,15 +15,15 @@ import (
 	shell "github.com/ipfs/go-ipfs-api"
 )
 
-type Stats struct {
-	Bw StatsBw `json:"bw"`
+type StatsBw struct {
+	TotalIn  int64   `json:"total_in"`
+	TotalOut int64   `json:"total_out"`
+	RateIn   float64 `json:"rate_in"`
+	RateOut  float64 `json:"rate_out"`
 }
 
-type StatsBw struct {
-	TotalIn  int64
-	TotalOut int64
-	RateIn   float64
-	RateOut  float64
+type Stats struct {
+	Bw StatsBw `json:"bw"`
 }
 
 type RequestBody struct {
@@ -32,7 +32,7 @@ type RequestBody struct {
 	Peers        int      `json:"peers"`
 	ID           string   `json:"id"`
 	Name         string   `json:"name"`
-	Addresses    []string `json:"Addresses"`
+	Addresses    []string `json:"addresses"`
 	AgentVersion string   `json:"version"`
 }
 
@@ -134,13 +134,19 @@ func (d *Driver) loop(ipfs *shell.Shell, httpClient *http.Client) {
 		return
 	}
 
+	fmt.Printf("[SENTINEL] total peers (%d): %+v\n", len(peers), peers)
 	if len(pinset.Swarms) > 0 {
+		peerMap := make(map[string]struct{}, len(peers))
+		for _, p := range peers {
+			peerMap[p] = struct{}{}
+		}
 		toConnect := make([]string, 0, len(pinset.Swarms))
 		for _, pin := range pinset.Swarms {
-			if _, ok := peers[pin]; !ok {
+			if _, ok := peerMap[pin]; !ok {
 				toConnect = append(toConnect, pin)
 			}
 		}
+
 		if len(toConnect) == 0 {
 			fmt.Println("[SENTINEL] nothing to connect")
 		} else {
@@ -150,7 +156,7 @@ func (d *Driver) loop(ipfs *shell.Shell, httpClient *http.Client) {
 			if err != nil {
 				reportError(d, err)
 			}
-			fmt.Printf("[SENTINEL] c completed (%v)\n", time.Since(connectStart))
+			fmt.Printf("[SENTINEL] connecting completed (%v)\n", time.Since(connectStart))
 		}
 	}
 
@@ -161,6 +167,8 @@ func (d *Driver) loop(ipfs *shell.Shell, httpClient *http.Client) {
 			toPin = append(toPin, pin.Cid)
 		}
 	}
+
+	fmt.Println("[SENTINEL] total pins", len(savedPins))
 	if len(toPin) == 0 {
 		fmt.Println("[SENTINEL] nothing to pin")
 	} else {
@@ -208,16 +216,16 @@ func (d *Driver) Run() error {
 	}
 }
 
-func getPeers(ctx context.Context, ipfs *shell.Shell) (map[string]struct{}, error) {
+func getPeers(ctx context.Context, ipfs *shell.Shell) ([]string, error) {
 	peers, err := ipfs.SwarmPeers(ctx)
 	if err != nil {
 		return nil, err
 	}
-	peerMap := make(map[string]struct{}, len(peers.Peers))
-	for _, p := range peers.Peers {
-		peerMap[p.Addr] = struct{}{}
+	peerArray := make([]string, len(peers.Peers))
+	for i, p := range peers.Peers {
+		peerArray[i] = p.Addr
 	}
-	return peerMap, nil
+	return peerArray, nil
 }
 
 func getStats(ctx context.Context, ipfs *shell.Shell) (Stats, error) {

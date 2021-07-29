@@ -1,0 +1,22 @@
+{
+        "status": "up",
+        "stats": {
+                "bw": {
+                        "total_in": 6038682,
+                        "total_out": 970520,
+                        "rate_in": 5340.352616469952,
+                        "rate_out": 458.3211082316425
+                }
+        },
+        "peers": 151,
+        "id": "12D3KooWRcEYzotpCQdTHdX4mZE1yFkjsNifFhLU4SzRGHrBrFXN",
+        "name": "mynode",
+        "addresses": [
+                "/ip4/127.0.0.1/tcp/4001/p2p/12D3KooWRcEYzotpCQdTHdX4mZE1yFkjsNifFhLU4SzRGHrBrFXN",
+                "/ip4/127.0.0.1/udp/4001/quic/p2p/12D3KooWRcEYzotpCQdTHdX4mZE1yFkjsNifFhLU4SzRGHrBrFXN",
+                "/ip4/172.19.0.2/tcp/4001/p2p/12D3KooWRcEYzotpCQdTHdX4mZE1yFkjsNifFhLU4SzRGHrBrFXN",
+                "/ip4/172.19.0.2/udp/4001/quic/p2p/12D3KooWRcEYzotpCQdTHdX4mZE1yFkjsNifFhLU4SzRGHrBrFXN",
+                "/ip4/2.205.37.214/udp/55398/quic/p2p/12D3KooWRcEYzotpCQdTHdX4mZE1yFkjsNifFhLU4SzRGHrBrFXN"
+        ],
+        "version": "go-ipfs/0.9.1/dc2715a"
+}

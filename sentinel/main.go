@@ -15,13 +15,14 @@ func main() {
 	if pinsetURL == "" {
 		panic("PINSET_URL is not defined")
 	}
-	fmt.Println("[SENTINEL] starting pinset follower", pinsetURL)
+	fmt.Println("[SENTINEL] starting pinset sentinel", pinsetURL)
 	fmt.Println("[SENTINEL] waiting for", WAIT)
 
 	driver := &Driver{
 		IPFSUrl:   "localhost:5001",
 		PinsetURL: pinsetURL,
-		Elapse:    5 * time.Minute,
+		Elapse:    2 * time.Minute,
+		Name:      os.Getenv("OPENDATA_NODE"),
 	}
 	for {
 		time.Sleep(WAIT)
