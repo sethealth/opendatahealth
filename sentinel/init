@@ -1,0 +1,10 @@
+#!/bin/sh
+
+/usr/local/bin/start_ipfs daemon --migrate=true&
+P1=$!
+
+# Start the first process
+/usr/local/bin/opendata_sentinel
+P2=$!
+
+wait $P1 $P2
