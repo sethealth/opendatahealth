@@ -1,14 +1,16 @@
 build:
 	docker build -t sethealth/opendata-ipfs-node .
 
-run:
-	docker run --rm --name sethealth/opendata-ipfs-node \
-		-v /tmp/ipfs-opendata-staging:/export \
-		-v /tmp/ipfs-opendata-data:/data/ipfs \
+run-tmp:
+	docker run --rm --name opendata-ipfs-node \
+		-v /tmp/data/ipfs:/data/ipfs \
 		-p 4001:4001 \
-		-p 8080:8080 \
-		-p 127.0.0.1:5001:5001 \
+		-p 5001:5001 \
+		-p 4001:4001/udp \
 		sethealth/opendata-ipfs-node:latest
+
+run-prod:
+	docker run --name opendata-ipfs-node -d --restart=unless-stopped -v /var/data/ipfs:/data/ipfs -p 4001:4001 -p 4001:4001/udp sethealth/opendata-ipfs-node:latest
 
 run-compose:
 	docker-compose build --parallel
