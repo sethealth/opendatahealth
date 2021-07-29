@@ -11,7 +11,7 @@ FROM ipfs/go-ipfs:v0.9.1 as ipfs
 
 # Now comes the actual target image, which aims to be as small as possible.
 FROM busybox:1.31.1-glibc
-LABEL maintainer="Steven Allen <steven@stebalien.com>"
+LABEL maintainer="Manu <manu@set.health>"
 
 # Get the ipfs binary, entrypoint script, and TLS CAs from the build container.
 ENV SRC_DIR /go-ipfs
