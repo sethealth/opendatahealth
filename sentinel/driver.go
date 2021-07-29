@@ -65,6 +65,7 @@ type Pinset struct {
 
 func makeRequest(d *Driver, body io.Reader) *http.Request {
 	req, _ := http.NewRequest("POST", d.PinsetURL, body)
+	req.Header.Add("Content-Type", "application/json")
 	return req
 }
 

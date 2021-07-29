@@ -3,14 +3,13 @@
 
 ## Run with docker
 ```sh
-docker run
-  -d \
+docker run -d \
   --name opendata-ipfs-node \
   --restart=always \
   -v /var/data/ipfs:/data/ipfs \
   -p 4001:4001 \
   -p 4001:4001/udp \
-  -env OPENDATA_NODE=mynode \
+  --env OPENDATA_NODE=mynode \
   sethealth/opendata-ipfs-node:latest
 ```
 
