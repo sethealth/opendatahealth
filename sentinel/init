@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "Opendata IPFS follower"
+echo "Opendata IPFS follower v0.0.1"
 
 /usr/local/bin/start_ipfs daemon --migrate=true&
 P1=$!
