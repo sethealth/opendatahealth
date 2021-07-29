@@ -1,11 +1,7 @@
 version: "3.8"
 services:
-  opendata:
-    container_name: opendata
-    build:
-      context: .
-      dockerfile: Dockerfile
-
+  opendata_ipfs_node:
+    image: sethealth/opendata-ipfs-node
     ports:
       - "4001:4001" # ipfs swarm
       - "4001:4001/udp"
