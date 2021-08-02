@@ -1,5 +1,13 @@
 # OpenData health
 
+## sysctl configuration
+
+Therefore, quic-go tries to increase the buffer size. The way to do this is an OS-specific, and we currently have an implementation for linux, windows and darwin. However, an application is only allowed to do increase the buffer size up to a maximum value set in the kernel. Unfortunately, on Linux this value is rather small, too small for high-bandwidth QUIC transfers.
+
+```
+sysctl -w net.core.rmem_max=2500000
+```
+
 
 ## Run with docker
 ```sh
