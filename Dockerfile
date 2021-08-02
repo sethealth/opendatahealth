@@ -49,7 +49,7 @@ EXPOSE 8080
 
 # Create the fs-repo directory and switch to a non-privileged user.
 ENV IPFS_PATH /data/ipfs
-ENV IPFS_PROFILE server,badgerds
+ENV IPFS_PROFILE server,flatfs
 ENV PINSET_URL https://api.set.health/pinset/openview-health/bu-5643105772503040
 
 RUN mkdir -p $IPFS_PATH \

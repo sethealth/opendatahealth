@@ -29,4 +29,4 @@ run-compose: build
 
 release: build
 	docker image push sethealth/opendata-ipfs-node
-	docker image tag sethealth/opendata-ipfs-node sethealth/opendata-ipfs-node:v0.0.2
+	docker image tag sethealth/opendata-ipfs-node sethealth/opendata-ipfs-node:v0.0.3
