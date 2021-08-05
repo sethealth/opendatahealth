@@ -12,6 +12,8 @@ const (
 
 func main() {
 	pinsetURL := os.Getenv("PINSET_URL")
+	ipfsURL := os.Getenv("IPFS_URL")
+
 	if pinsetURL == "" {
 		panic("PINSET_URL is not defined")
 	}
@@ -19,17 +21,17 @@ func main() {
 	fmt.Println("[SENTINEL] waiting for", WAIT)
 
 	driver := &Driver{
-		IPFSUrl:   "localhost:5001",
+		IPFSUrl:   ipfsURL,
 		PinsetURL: pinsetURL,
 		Elapse:    2 * time.Minute,
 		Name:      os.Getenv("OPENDATA_NODE"),
 	}
 	for {
-		time.Sleep(WAIT)
 		err := driver.Run()
 		if err != nil {
 			fmt.Fprintln(os.Stderr, "SENTINEL ERROR:", err.Error())
 		}
+		time.Sleep(WAIT)
 		fmt.Println("[SENTINEL] reconnecting in", WAIT)
 
 	}

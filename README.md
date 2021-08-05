@@ -9,27 +9,20 @@ sysctl -w net.core.rmem_max=2500000
 ```
 
 
-## Run with docker
-```sh
-docker run -d \
-  --name opendata-ipfs-node \
-  --restart=always \
-  -v /var/data/ipfs:/data/ipfs \
-  -p 4001:4001 \
-  -p 4001:4001/udp \
-  --env OPENDATA_NODE=mynode \
-  sethealth/opendata-ipfs-node:latest
-```
-
 ## Run in Docker compose
 
 ```yaml
 version: "3.8"
 services:
-  opendata_ipfs_node:
-    image: sethealth/opendata-ipfs-node
+  opendata_ipfs:
+    image: ipfs/go-ipfs:v0.9.1
+    restart: always
+    sysctls:
+      net.core.rmem_max: 2500000
+
     environment:
-      OPENDATA_NODE: mynode
+      IPFS_PATH: /data/ipfs
+      IPFS_PROFILE: server,flatfs
 
     ports:
       - "4001:4001" # ipfs swarm
@@ -38,4 +31,13 @@ services:
     volumes:
       - ./ipfs/ipfs0:/data/ipfs
 
+  opendata_sentinel:
+    image: sethealth/opendata-sentinel
+    restart: always
+    environment:
+      IPFS_URL: opendata_ipfs:5001
+      PINSET_URL: https://api.set.health/pinset/openview-health/bu-5643105772503040
+      OPENDATA_NODE: sethealth_do
+    depends_on:
+      - opendata_ipfs
 ```
